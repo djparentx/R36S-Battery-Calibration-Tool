@@ -2063,11 +2063,11 @@ CUSTPY
     fi
 
     # --- summarise session ---
-    local V_MIN V_MAX FIRST_TS LAST_TS DURATION_MIN
-    V_MIN=$(tail -n +2 "$SOURCE_FILE" | cut -d',' -f2 | sort -n | head -1)
-    V_MAX=$(tail -n +2 "$SOURCE_FILE" | cut -d',' -f2 | sort -n | tail -1)
-    FIRST_TS=$(tail -n +2 "$SOURCE_FILE" | head -1 | cut -d',' -f1)
-    LAST_TS=$(tail -n +2 "$SOURCE_FILE" | tail -1 | cut -d',' -f1)
+	local V_MIN V_MAX FIRST_TS LAST_TS DURATION_MIN
+    V_MIN=$(tail -n +2 "$SOURCE_FILE" | grep -v '^$' | cut -d',' -f2 | grep -v '^$' | sort -n | head -1)
+    V_MAX=$(tail -n +2 "$SOURCE_FILE" | grep -v '^$' | cut -d',' -f2 | grep -v '^$' | sort -n | tail -1)
+    FIRST_TS=$(tail -n +2 "$SOURCE_FILE" | grep -v '^$' | head -1 | cut -d',' -f1)
+    LAST_TS=$(tail -n +2 "$SOURCE_FILE" | grep -v '^$' | tail -1 | cut -d',' -f1)
     DURATION_MIN=$(( (LAST_TS - FIRST_TS) / 60 ))
 
     dialog \
