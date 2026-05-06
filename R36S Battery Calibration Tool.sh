@@ -2008,6 +2008,7 @@ CUSTPY
                 fi
 
                 mkdir -p "$CAL_DIR"
+				sudo chown -R ark:ark "$CAL_DIR"
                 echo "custom.csv" > "$CAL_DIR/curve.source"
                 rm -f "$CAL_DIR/stock_cache.csv"
                 SOURCE_FILE="$CUSTOM_FILE"
@@ -2169,6 +2170,7 @@ PYEOF
 
     # --- commit ---
     mkdir -p "$CAL_DIR"
+	sudo chown -R ark:ark "$CAL_DIR"
     basename "$SOURCE_FILE" > "$CAL_DIR/curve.source"
 	cp "$FIT_OUTPUT" "$CAL_CURVE"
 	
@@ -2393,6 +2395,7 @@ Start_Calibration() {
 	
     # --- session setup ---
     mkdir -p "$CAL_DIR"
+	sudo chown -R ark:ark "$CAL_DIR"
 	echo "timestamp,voltage_mv,stock_pct,health" > "$SESSION_FILE"
 	rm -f "$BAD_FLAG"
     rm -f "$CAL_DIR/session.checked"
@@ -3455,7 +3458,7 @@ Main_Menu() {
 # Gamepad Setup
 # =======================================================
 export SDL_GAMECONTROLLERCONFIG_FILE="/opt/inttools/gamecontrollerdb.txt"
-chmod 666 /dev/uinput
+chmod 666 /dev/uinput 2>/dev/null
 cp /opt/inttools/keys.gptk "$TMP_KEYS"
 if grep -q '^b = backspace' "$TMP_KEYS"; then
     sed -i 's/^b = .*/b = esc/' "$TMP_KEYS"
