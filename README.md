@@ -1,5 +1,5 @@
 # R36S Battery Calibration Tool
-v1.0 by djparent
+v1.1 by djparent
 
 ---
 
