@@ -1269,12 +1269,12 @@ Bat_Status() {
     while true; do
         local VOLTAGE_UV VOLTAGE_MV STOCK_PCT STATUS CURRENT_UA CURRENT_MA HEALTH
         local CHARGE_FULL_MAH
-        CHARGE_FULL_MAH=$(( $(cat /sys/class/power_supply/battery/charge_full 2>/dev/null) / 1000 ))
-        VOLTAGE_UV=$(cat "$VOLTAGE_PATH" 2>/dev/null)
-        VOLTAGE_MV=$(( VOLTAGE_UV / 1000 ))
+        CHARGE_FULL_MAH=$(( ($(cat /sys/class/power_supply/battery/charge_full 2>/dev/null || echo 0)) / 1000 ))
+		VOLTAGE_UV=$(cat "$VOLTAGE_PATH" 2>/dev/null || echo 0)
+		VOLTAGE_MV=$(( VOLTAGE_UV / 1000 ))
         STATUS=$(cat "$STATUS_PATH" 2>/dev/null)
-        CURRENT_UA=$(cat "$CURRENT_PATH" 2>/dev/null)
-        CURRENT_MA=$(( CURRENT_UA / 1000 ))
+        CURRENT_UA=$(cat "$CURRENT_PATH" 2>/dev/null || echo 0)
+		CURRENT_MA=$(( CURRENT_UA / 1000 ))
         HEALTH=$(cat "$HEALTH_PATH" 2>/dev/null)
 
         # --- stock% from applied source or OCV fallback ---
@@ -2008,7 +2008,6 @@ CUSTPY
                 fi
 
                 mkdir -p "$CAL_DIR"
-				sudo chown -R ark:ark "$CAL_DIR"
                 echo "custom.csv" > "$CAL_DIR/curve.source"
                 rm -f "$CAL_DIR/stock_cache.csv"
                 SOURCE_FILE="$CUSTOM_FILE"
@@ -2107,10 +2106,15 @@ if len(rows) < 2:
 
 use_stock_pct = os.path.basename(session_file) == "average.csv"
 
-rows.sort(key=lambda r: r["ts"])
-total = len(rows) - 1
-for i, row in enumerate(rows):
+rows_sorted = sorted(rows, key=lambda r: r["ts"])
+timestamps = [r["ts"] for r in rows_sorted]
+jumps = [abs(timestamps[i+1] - timestamps[i]) for i in range(len(timestamps)-1)]
+if any(j > 3600 * 24 for j in jumps):
+    rows_sorted = list(rows)
+total = len(rows_sorted) - 1
+for i, row in enumerate(rows_sorted):
     row["real_pct"] = round(100 - (i / total * 100))
+rows = rows_sorted
 
 # --- build pct -> mv interpolation ---
 rows.sort(key=lambda r: r["real_pct"])
@@ -2170,7 +2174,6 @@ PYEOF
 
     # --- commit ---
     mkdir -p "$CAL_DIR"
-	sudo chown -R ark:ark "$CAL_DIR"
     basename "$SOURCE_FILE" > "$CAL_DIR/curve.source"
 	cp "$FIT_OUTPUT" "$CAL_CURVE"
 	
@@ -2395,7 +2398,6 @@ Start_Calibration() {
 	
     # --- session setup ---
     mkdir -p "$CAL_DIR"
-	sudo chown -R ark:ark "$CAL_DIR"
 	echo "timestamp,voltage_mv,stock_pct,health" > "$SESSION_FILE"
 	rm -f "$BAD_FLAG"
     rm -f "$CAL_DIR/session.checked"
@@ -2540,6 +2542,13 @@ if len(all_sessions) >= 3:
 # --- derive curve from each session using time position ---
 def derive_curve(rows):
     rows_sorted = sorted(rows, key=lambda r: r["ts"])
+    # detect clock jump — if any timestamp goes backwards or jumps
+    # more than 1 hour between samples, fall back to row order
+    JUMP_THRESHOLD = 3600
+    timestamps = [r["ts"] for r in rows_sorted]
+    jumps = [abs(timestamps[i+1] - timestamps[i]) for i in range(len(timestamps)-1)]
+    if any(j > JUMP_THRESHOLD * 24 for j in jumps):
+        rows_sorted = list(rows)  # use original file order
     total = len(rows_sorted) - 1
     for i, row in enumerate(rows_sorted):
         row["real_pct"] = round(100 - (i / total * 100))
@@ -2761,6 +2770,13 @@ sample_pcts = list(range(3, 98))
 # --- derive curve from session using time position ---
 def derive_curve(rows):
     rows_sorted = sorted(rows, key=lambda r: r["ts"])
+    # detect clock jump — if any timestamp goes backwards or jumps
+    # more than 1 hour between samples, fall back to row order
+    JUMP_THRESHOLD = 3600
+    timestamps = [r["ts"] for r in rows_sorted]
+    jumps = [abs(timestamps[i+1] - timestamps[i]) for i in range(len(timestamps)-1)]
+    if any(j > JUMP_THRESHOLD * 24 for j in jumps):
+        rows_sorted = list(rows)  # use original file order
     total = len(rows_sorted) - 1
     for i, row in enumerate(rows_sorted):
         row["real_pct"] = round(100 - (i / total * 100))
@@ -3474,5 +3490,13 @@ dialog --clear
 trap Exit_Menu EXIT
 
 mkdir -p "$EXPORT_DIR"
+
+if [[ -f "$CAL_DIR/session.pid" ]]; then
+    PID=$(cat "$CAL_DIR/session.pid" 2>/dev/null)
+    kill -0 "$PID" 2>/dev/null || rm -f "$CAL_DIR/session.pid"
+fi
+
+timedatectl set-ntp true 2>/dev/null
+systemctl start systemd-timesyncd 2>/dev/null &
 
 Main_Menu
