@@ -3252,7 +3252,7 @@ Batt_Size() {
 	CHOICE=$(dialog \
 		--clear \
 		--colors \
-		--no-collapse \
+		--nocollapse \
 		--cancel-label "$T_BACK" \
 		--backtitle "$T_BACKTITLE" \
 		--title "$T_BAT_SIZE" \
@@ -3331,7 +3331,7 @@ Calibration_Menu() {
 		CHOICE=$(dialog \
 			--clear \
 			--colors \
-			--no-collapse \
+			--nocollapse \
 			--cancel-label "$T_BACK" \
 			--backtitle "$T_BACKTITLE" \
 			--title "$T_CAL_TITLE" \
@@ -3369,7 +3369,7 @@ Curve_Menu() {
 		CHOICE=$(dialog \
 			--clear \
 			--colors \
-			--no-collapse \
+			--nocollapse \
 			--cancel-label "$T_BACK" \
 			--backtitle "$T_BACKTITLE" \
 			--title "$T_CURVE_TITLE" \
@@ -3429,7 +3429,7 @@ Main_Menu() {
 		CHOICE=$(dialog \
 			--clear \
 			--colors \
-			--no-collapse \
+			--nocollapse \
 			--cancel-label "$T_EXIT" \
 			--backtitle "$T_BACKTITLE" \
 			--title "$T_MAIN_TITLE" \
