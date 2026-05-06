@@ -95,9 +95,11 @@
 # Tips:
 # -----
 #
-# 1) Can be run from Tools or Ports folder
+# 1) Run from Tools folder
 #
 # 2) Turn off wifi and bluetooth for better results
+#
+# 3) Enable all CPU cores (if any are disabled)
 #
 # 3) Keep the device in a normal temperature environment:
 # 
