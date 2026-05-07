@@ -1356,7 +1356,7 @@ EOF
         dialog \
             --backtitle "$T_BACKTITLE" \
             --title "$T_BAT_STAT" \
-			--nocollapse \
+			--no-collapse \
             --cancel-label "$T_BACK" \
             --ok-label "$T_REFRESH" \
             --textbox "$TEMP_LIVE" \
@@ -1825,7 +1825,7 @@ for i in range(n):
     dialog \
         --backtitle "$T_BACKTITLE" \
         --title "$T_CMP_TITLE" \
-		--nocollapse \
+		--no-collapse \
         --ok-label "$T_BACK" \
         --textbox "$TEMP_CMP" \
         22 55 2>&1 > "$CURR_TTY"
@@ -2169,7 +2169,7 @@ PYEOF
     dialog \
         --backtitle "$T_BACKTITLE" \
         --title "$T_REVIEW" \
-		--nocollapse \
+		--no-collapse \
         --yesno "$(eval printf "%b" "\"$T_REVIEW_MSG\"")" \
         22 35 2>&1 > "$CURR_TTY"
     [[ $? -ne 0 ]] && return
@@ -3270,7 +3270,7 @@ Batt_Size() {
 	CHOICE=$(dialog \
 		--clear \
 		--colors \
-		--nocollapse \
+		--no-collapse \
 		--cancel-label "$T_BACK" \
 		--backtitle "$T_BACKTITLE" \
 		--title "$T_BAT_SIZE" \
@@ -3349,7 +3349,7 @@ Calibration_Menu() {
 		CHOICE=$(dialog \
 			--clear \
 			--colors \
-			--nocollapse \
+			--no-collapse \
 			--cancel-label "$T_BACK" \
 			--backtitle "$T_BACKTITLE" \
 			--title "$T_CAL_TITLE" \
@@ -3387,7 +3387,7 @@ Curve_Menu() {
 		CHOICE=$(dialog \
 			--clear \
 			--colors \
-			--nocollapse \
+			--no-collapse \
 			--cancel-label "$T_BACK" \
 			--backtitle "$T_BACKTITLE" \
 			--title "$T_CURVE_TITLE" \
@@ -3447,7 +3447,7 @@ Main_Menu() {
 		CHOICE=$(dialog \
 			--clear \
 			--colors \
-			--nocollapse \
+			--no-collapse \
 			--cancel-label "$T_EXIT" \
 			--backtitle "$T_BACKTITLE" \
 			--title "$T_MAIN_TITLE" \
