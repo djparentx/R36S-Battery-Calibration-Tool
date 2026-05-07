@@ -143,6 +143,7 @@ export TERM=linux
 VOLTAGE_PATH="/sys/class/power_supply/battery/voltage_now"
 CAPACITY_PATH="/sys/class/power_supply/battery/capacity"
 CAL_SERVICE="/etc/systemd/system/battery-cal.service"
+ES_CONF="/home/ark/.emulationstation/es_settings.cfg"
 DAEMON="/usr/local/bin/battery-cal-daemon.sh"
 CAL_DIR="/usr/local/etc/battery-cal"
 SESSION_FILE="$CAL_DIR/session.csv"
