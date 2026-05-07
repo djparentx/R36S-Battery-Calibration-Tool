@@ -2143,8 +2143,20 @@ for pct in range(0, 101):
         output.append((mv, pct))
 
 output.sort(key=lambda x: x[0])
+
+# --- enforce monotonic pct after mv sort ---
+# when sorted by mv, pct must also increase monotonically
+# if not, smooth by forward-filling the last valid pct
+smoothed = []
+last_pct = -1
+for mv, pct in output:
+    if pct <= last_pct:
+        pct = last_pct
+    smoothed.append((mv, pct))
+    last_pct = pct
+
 with open(output_file, "w", newline="\n") as f:
-    for mv, pct in output:
+    for mv, pct in smoothed:
         f.write(f"{mv}:{pct}\n")
 
 print("OK")
@@ -3022,6 +3034,14 @@ else:
 MAX_EVENTS     = 3
 MAX_DROP_PCT   = 0.10  # max 10% of samples removed by cleaning
 
+# --- strip null bytes from file in-place ---
+with open(session_file, 'rb') as f:
+    raw = f.read()
+if b'\x00' in raw:
+    cleaned = raw.replace(b'\x00', b'')
+    with open(session_file, 'wb') as f:
+        f.write(cleaned)
+		
 rows = []
 with open(session_file) as f:
     reader = csv.DictReader(f)
