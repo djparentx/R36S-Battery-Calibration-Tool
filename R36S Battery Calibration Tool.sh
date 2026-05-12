@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # =======================================================
-# R36S Battery Calibration Tool v1.1
+# R36S Battery Calibration Tool v1.2
 # by djparent
 # =======================================================
 
@@ -124,6 +124,10 @@
 #	   - ChatGPT may also be used but gives a less accurate analysis
 # 
 # -------------------------------------------------------
+
+SAMPLE_INTERVAL=60		# 60 is the default. Raise this to reduce sample numbers with extended batteries.
+CHARGE_MIN_MV=4050		# 4050 is the default. Lower this if you can't start calibration.
+CUTOFF_MV=3000			# 3000 is the default. Raise this if your device turns off early.
 
 # =======================================================
 # Root privileges check
@@ -1374,9 +1378,7 @@ Run_Sample_Loop() {
     local STATUS_PATH="/sys/class/power_supply/battery/status"
 	local HEALTH_PATH="/sys/class/power_supply/battery/health"
     local VOLTAGE_UV VOLTAGE_MV STOCK_PCT HEALTH TIMESTAMP
-    local SAMPLE_INTERVAL=60
     local SETTLE_DROP=150
-    local CUTOFF_MV=3000
     local SETTLE_GAP=50
     local SETTLING=true
     local FIRST_MV=0
@@ -2332,8 +2334,6 @@ Stop_Calibration() {
 # Start New Calibration
 # =======================================================
 Start_Calibration() {
-    local CHARGE_MIN_MV=4050
-
     # --- check not already running ---
     if [[ -f "$CAL_DIR/session.pid" ]] && kill -0 "$(cat "$CAL_DIR/session.pid")" 2>/dev/null; then
         dialog \
