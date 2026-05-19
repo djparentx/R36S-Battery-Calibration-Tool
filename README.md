@@ -1,5 +1,5 @@
 # R36S Battery Calibration Tool
-v1.1 by djparent
+v1.3 by djparent
 
 ---
 
@@ -14,6 +14,7 @@ This tool helps replace unreliable stock battery readings with a calibrated prof
 
 ## Features
 
+- Self updates to latest GitHub release
 - Full battery discharge logging
 - Automatic curve generation from recorded data
 - Multi-session averaging for improved accuracy
