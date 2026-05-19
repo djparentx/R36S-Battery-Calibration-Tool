@@ -166,7 +166,7 @@ fi
 # -------------------------------------------------------
 # Default configuration : EN
 # -------------------------------------------------------
-T_BACKTITLE="R36S Battery Calibration Tool v1.1 by djparent"
+T_BACKTITLE="R36S Battery Calibration Tool v${VERSION} by djparent"
 T_MAIN_TITLE="Main Menu"
 T_WAIT="Please wait..."
 T_STARTING="Starting."
@@ -308,7 +308,7 @@ T_DOWNLOAD="Download Update Now?"
 
 # --- FRANCAIS (FR) ---
 if [[ "$SYSTEM_LANG" == *"fr"* ]]; then
-T_BACKTITLE="Outil de calibration batterie R36S v1.1 par djparent"
+T_BACKTITLE="Outil de calibration batterie R36S v${VERSION} par djparent"
 T_MAIN_TITLE="Menu principal"
 T_WAIT="Veuillez patienter..."
 T_STARTING="Demarrage."
@@ -450,7 +450,7 @@ T_DOWNLOAD="Telecharger la mise a jour maintenant ?"
 
 # --- ESPANOL (ES) ---
 elif [[ "$SYSTEM_LANG" == *"es"* ]]; then
-T_BACKTITLE="Herramienta de calibracion de bateria R36S v1.1 por djparent"
+T_BACKTITLE="Herramienta de calibracion de bateria R36S v${VERSION} por djparent"
 T_MAIN_TITLE="Menu principal"
 T_WAIT="Por favor espere..."
 T_STARTING="Iniciando."
@@ -592,7 +592,7 @@ T_DOWNLOAD="Descargar actualizacion ahora?"
 
 # --- PORTUGUES (PT) ---
 elif [[ "$SYSTEM_LANG" == *"pt"* ]]; then
-T_BACKTITLE="Ferramenta de calibracao de bateria R36S v1.1 por djparent"
+T_BACKTITLE="Ferramenta de calibracao de bateria R36S v${VERSION} por djparent"
 T_MAIN_TITLE="Menu principal"
 T_WAIT="Por favor aguarde..."
 T_STARTING="Iniciando."
@@ -734,7 +734,7 @@ T_DOWNLOAD="Baixar atualizacao agora?"
 
 # --- ITALIANO (IT) ---
 elif [[ "$SYSTEM_LANG" == *"it"* ]]; then
-T_BACKTITLE="Strumento di calibrazione batteria R36S v1.1 di djparent"
+T_BACKTITLE="Strumento di calibrazione batteria R36S v${VERSION} di djparent"
 T_MAIN_TITLE="Menu principale"
 T_WAIT="Attendere..."
 T_STARTING="Avvio."
@@ -876,7 +876,7 @@ T_DOWNLOAD="Scaricare aggiornamento ora?"
 
 # --- DEUTSCH (DE) ---
 elif [[ "$SYSTEM_LANG" == *"de"* ]]; then
-T_BACKTITLE="R36S Batteriekalibrierungswerkzeug v1.1 von djparent"
+T_BACKTITLE="R36S Batteriekalibrierungswerkzeug v${VERSION} von djparent"
 T_MAIN_TITLE="Hauptmenu"
 T_WAIT="Bitte warten..."
 T_STARTING="Startet."
@@ -1018,7 +1018,7 @@ T_DOWNLOAD="Update jetzt herunterladen?"
 
 # --- POLSKI (PL) ---
 elif [[ "$SYSTEM_LANG" == *"pl"* ]]; then
-T_BACKTITLE="Narzedzie kalibracji baterii R36S v1.1 od djparent"
+T_BACKTITLE="Narzedzie kalibracji baterii R36S v${VERSION} od djparent"
 T_MAIN_TITLE="Menu glowne"
 T_WAIT="Prosze czekac..."
 T_STARTING="Uruchamianie."
