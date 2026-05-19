@@ -3560,6 +3560,7 @@ printf "\033[H\033[2J" > "$CURR_TTY"
 dialog --clear
 trap Exit_Menu EXIT
 
+Self_Update
 mkdir -p "$EXPORT_DIR"
 
 if [[ -f "$CAL_DIR/session.pid" ]]; then
