@@ -1,3 +1,5 @@
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/O8Z424G15Y)
+
 # R36S Battery Calibration Tool
 v1.3 by djparent
 
